@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/veskew/Desktop/Olin/SoftSys/Dorm-Room-Temperature-Monitoring/build/src",
+  "command": "/usr/bin/gcc   -Wall -Wextra -pedantic -Wconversion -Wdouble-promotion -Wduplicated-branches -Wduplicated-cond -Wimplicit-fallthrough -Wlogical-op -Wmisleading-indentation -Wnull-dereference -Wshadow -Wsign-conversion -Wunreachable-code -Wunused -g -g -o CMakeFiles/server.dir/server.c.o -c /home/veskew/Desktop/Olin/SoftSys/Dorm-Room-Temperature-Monitoring/src/server.c",
+  "file": "/home/veskew/Desktop/Olin/SoftSys/Dorm-Room-Temperature-Monitoring/src/server.c"
+}
+]
