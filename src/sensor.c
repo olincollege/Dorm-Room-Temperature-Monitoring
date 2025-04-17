@@ -56,9 +56,9 @@ int get_measurement(int fd, int cmd_byte, float* temp, float* humidity){
 
 int print_measurement(char* dev, int addr, int cmd_byte){
     int fd = open_and_connect(dev, addr);
-    float* temp;
-    float* humidity;
-    get_measurement(fd, cmd_byte, temp, humidity);
+    float temp;
+    float humidity;
+    get_measurement(fd, cmd_byte, &temp, &humidity);
     printf("Temperature: %.2f°C\n", temp);
     printf("Humidity: %.2f%%\n", humidity);
 
