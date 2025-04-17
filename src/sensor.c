@@ -9,21 +9,24 @@
 #define SHT40_ADDR 0x44
 #define SHT40_MEASURE_HIGH_PREC 0xFD
 
-int main() {
-    int fd = open(I2C_DEV, O_RDWR);
+int open_and_connect(char* dev, int addr){
+    int fd = open(dev, O_RDWR);
     if (fd < 0) {
         perror("Failed to open I2C bus");
         return 1;
     }
 
-    if (ioctl(fd, I2C_SLAVE, SHT40_ADDR) < 0) {
+    if (ioctl(fd, I2C_SLAVE, addr) < 0) {
         perror("Failed to select I2C device");
         close(fd);
         return 1;
     }
+    return fd;
+}
 
+int get_measurement(int fd, int cmd_byte, float* temp, float* humidity){
     // Send measurement command
-    unsigned char cmd = SHT40_MEASURE_HIGH_PREC;
+    unsigned char cmd = cmd_byte;
     if (write(fd, &cmd, 1) != 1) {
         perror("Failed to send measurement command");
         close(fd);
@@ -42,15 +45,28 @@ int main() {
 
     // Convert temperature
     uint16_t temp_raw = (buf[0] << 8) | buf[1];
-    float temp = -45 + 175 * ((float)temp_raw / 65535.0);
+    *temp = -45 + 175 * ((float)temp_raw / 65535.0);
 
     // Convert humidity
     uint16_t hum_raw = (buf[3] << 8) | buf[4];
-    float humidity = 100 * ((float)hum_raw / 65535.0);
+    *humidity = 100 * ((float)hum_raw / 65535.0);
 
+    return 0;
+}
+
+int print_measurement(char* dev, int addr, int cmd_byte){
+    int fd = open_and_connect(dev, addr);
+    float* temp;
+    float* humidity;
+    get_measurement(fd, cmd_byte, temp, humidity);
     printf("Temperature: %.2f°C\n", temp);
     printf("Humidity: %.2f%%\n", humidity);
 
     close(fd);
+    return 0;
+}
+
+int main() {
+    print_measurement(I2C_DEV, SHT40_ADDR, SHT40_MEASURE_HIGH_PREC);
     return 0;
 }
