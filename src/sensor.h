@@ -5,6 +5,10 @@
 
 #include <stdlib.h>
 
+#define I2C_DEV "/dev/i2c-1"
+#define SHT40_ADDR 0x44
+#define SHT40_MEASURE_HIGH_PREC 0xFD
+
 /**
  * Open the I2C bus and select an I2C device.
  *

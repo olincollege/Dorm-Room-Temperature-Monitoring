@@ -7,9 +7,6 @@
 #include <linux/i2c-dev.h>
 #include <sys/ioctl.h>
 
-#define I2C_DEV "/dev/i2c-1"
-#define SHT40_ADDR 0x44
-#define SHT40_MEASURE_HIGH_PREC 0xFD
 
 int open_and_connect(char* dev, int addr){
     int fd = open(dev, O_RDWR);
@@ -60,7 +57,7 @@ int print_measurements(char* dev, int addr, int cmd_byte, size_t measurements, s
     int fd = open_and_connect(dev, addr);
     float temp;
     float humidity;
-    for(int i = 0; i < measurements; ++i){
+    for(size_t i = 0; i < measurements; ++i){
         get_measurement(fd, cmd_byte, &temp, &humidity);
         printf("Temperature: %.2f°C\n", temp);
         printf("Humidity: %.2f%%\n", humidity);
@@ -70,8 +67,4 @@ int print_measurements(char* dev, int addr, int cmd_byte, size_t measurements, s
     return 0;
 }
 
-int main() {
-    
-    print_measurements(I2C_DEV, SHT40_ADDR, SHT40_MEASURE_HIGH_PREC, 10, 1);
-    return 0;
-}
+
