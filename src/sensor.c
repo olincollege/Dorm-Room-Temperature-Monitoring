@@ -1,3 +1,5 @@
+#include "sensor.h"
+
 #include <stdio.h>
 #include <stdint.h>
 #include <fcntl.h>
@@ -32,8 +34,8 @@ int get_measurement(int fd, int cmd_byte, float* temp, float* humidity){
         close(fd);
         return 1;
     }
-
-    usleep(10000);  // wait 10ms for measurement
+    // wait 10ms for measurement
+    usleep(10000);
 
     // Read 6 bytes (2 temp, 1 CRC, 2 humidity, 1 CRC)
     unsigned char buf[6];
@@ -54,7 +56,7 @@ int get_measurement(int fd, int cmd_byte, float* temp, float* humidity){
     return 0;
 }
 
-int print_measurements(char* dev, int addr, int cmd_byte, int measurements, int delay){
+int print_measurements(char* dev, int addr, int cmd_byte, size_t measurements, size_t delay){
     int fd = open_and_connect(dev, addr);
     float temp;
     float humidity;

@@ -1,0 +1,50 @@
+/**
+ * A library for getting sensor values from an SHT40 sensor on a Raspberry Pi.
+ */
+#pragma once
+
+#include <stdlib.h>
+
+/**
+ * Open the I2C bus and select an I2C device.
+ *
+ * @param dev File path to the I2C library.
+ * @param addr The specific adress of the SHT40 sensor we are using.
+ * @return The file descriptor attached to the sensor.
+ */
+int open_and_connect(char* dev, int addr);
+
+/**
+ * Get a measurement from the sensor and store it in pointers passed in.
+ * 
+ * Send a measurement command, wait for a response to that command, and then
+ * read the response. Convert the raw data in the response to a temperature in
+ * celsius and a relative humidity. Store that data in the pointers passed to
+ * the function.
+ *
+ * @param fd File descriptor attached to the sensor.
+ * @param cmd_byte Command byte for triggering a high-precision-measurement.
+ * @param temp Pointer to temperature variable.
+ * @param humidity Pointer to humidity variable.
+ * @return An int representing the success of gathering a measurement.
+ */
+int get_measurement(int fd, int cmd_byte, float* temp, float* humidity);
+
+
+/**
+ * Get a measurement from the sensor and store it in pointers passed in.
+ * 
+ * Loop measurements times and run get_measurements, printing the updated
+ * temperature and humidity reading. Sleep for delay seconds between iterations
+ * of the loop.
+ *
+ * @param dev File path to the I2C library.
+ * @param addr The specific adress of the SHT40 sensor we are using.
+ * @param cmd_byte Command byte for triggering a high-precision-measurement.
+ * @param measurements The number of measurements to gather from the sensor.
+ * @param delay The time in seconds to wait between each reading.
+ * @return An int representing the success of gathering a measurement.
+ */
+int print_measurements(char* dev, int addr, int cmd_byte, size_t measurements, size_t delay);
+
+
