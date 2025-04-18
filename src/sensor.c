@@ -54,19 +54,22 @@ int get_measurement(int fd, int cmd_byte, float* temp, float* humidity){
     return 0;
 }
 
-int print_measurement(char* dev, int addr, int cmd_byte){
+int print_measurements(char* dev, int addr, int cmd_byte, int measurements, int delay){
     int fd = open_and_connect(dev, addr);
     float temp;
     float humidity;
-    get_measurement(fd, cmd_byte, &temp, &humidity);
-    printf("Temperature: %.2f°C\n", temp);
-    printf("Humidity: %.2f%%\n", humidity);
-
+    for(int i = 0; i < measurements; ++i){
+        get_measurement(fd, cmd_byte, &temp, &humidity);
+        printf("Temperature: %.2f°C\n", temp);
+        printf("Humidity: %.2f%%\n", humidity);
+        sleep(delay);
+    }
     close(fd);
     return 0;
 }
 
 int main() {
-    print_measurement(I2C_DEV, SHT40_ADDR, SHT40_MEASURE_HIGH_PREC);
+    
+    print_measurements(I2C_DEV, SHT40_ADDR, SHT40_MEASURE_HIGH_PREC, 10, 1);
     return 0;
 }
