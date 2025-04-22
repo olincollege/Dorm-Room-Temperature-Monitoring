@@ -10,4 +10,4 @@
 # signatures/types (INTERFACE), or both (PUBLIC).
 add_library(sensor sensor.c sensor.h)
 add_executable(main main.c)
-target_link_libraries(main sensor)
+target_link_libraries(main PRIVATE sensor)
