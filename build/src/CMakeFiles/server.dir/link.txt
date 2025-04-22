@@ -1,1 +1,0 @@
-/usr/bin/gcc -Wall -Wextra -pedantic -Wconversion -Wdouble-promotion -Wduplicated-branches -Wduplicated-cond -Wimplicit-fallthrough -Wlogical-op -Wmisleading-indentation -Wnull-dereference -Wshadow -Wsign-conversion -Wunreachable-code -Wunused -g -g CMakeFiles/server.dir/server.c.o -o server 
