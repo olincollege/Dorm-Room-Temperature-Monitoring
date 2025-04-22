@@ -23,9 +23,11 @@ int open_and_connect(char* dev, int addr){
     return fd;
 }
 
-int get_measurement(int fd, int cmd_byte, float* temp, float* humidity){
+int get_measurement(int addr, float* temp, float* humidity){
+    int fd = open_and_connect(I2C_DEV, addr);
+    
     // Send measurement command
-    unsigned char cmd = cmd_byte;
+    unsigned char cmd = SHT40_MEASURE_HIGH_PREC;
     if (write(fd, &cmd, 1) != 1) {
         perror("Failed to send measurement command");
         close(fd);
@@ -50,20 +52,19 @@ int get_measurement(int fd, int cmd_byte, float* temp, float* humidity){
     uint16_t hum_raw = (buf[3] << 8) | buf[4];
     *humidity = 100 * ((float)hum_raw / 65535.0);
 
+    close(fd);
     return 0;
 }
 
-int print_measurements(char* dev, int addr, int cmd_byte, size_t measurements, size_t delay){
-    int fd = open_and_connect(dev, addr);
+int print_measurements(int addr, size_t measurements, size_t delay){
     float temp;
     float humidity;
     for(size_t i = 0; i < measurements; ++i){
-        get_measurement(fd, cmd_byte, &temp, &humidity);
+        get_measurement(addr, &temp, &humidity);
         printf("Temperature: %.2f°C\n", temp);
         printf("Humidity: %.2f%%\n", humidity);
         sleep(delay);
     }
-    close(fd);
     return 0;
 }
 

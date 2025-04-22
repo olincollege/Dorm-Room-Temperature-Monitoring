@@ -26,13 +26,12 @@ int open_and_connect(char* dev, int addr);
  * celsius and a relative humidity. Store that data in the pointers passed to
  * the function.
  *
- * @param fd File descriptor attached to the sensor.
- * @param cmd_byte Command byte for triggering a high-precision-measurement.
+ * @param addr The specific adress of the SHT40 sensor we are using.
  * @param temp Pointer to temperature variable.
  * @param humidity Pointer to humidity variable.
  * @return An int representing the success of gathering a measurement.
  */
-int get_measurement(int fd, int cmd_byte, float* temp, float* humidity);
+int get_measurement(int addr, float* temp, float* humidity);
 
 
 /**
@@ -42,13 +41,11 @@ int get_measurement(int fd, int cmd_byte, float* temp, float* humidity);
  * temperature and humidity reading. Sleep for delay seconds between iterations
  * of the loop.
  *
- * @param dev File path to the I2C library.
  * @param addr The specific adress of the SHT40 sensor we are using.
- * @param cmd_byte Command byte for triggering a high-precision-measurement.
  * @param measurements The number of measurements to gather from the sensor.
  * @param delay The time in seconds to wait between each reading.
  * @return An int representing the success of gathering a measurement.
  */
-int print_measurements(char* dev, int addr, int cmd_byte, size_t measurements, size_t delay);
+int print_measurements(int addr, size_t measurements, size_t delay);
 
 
