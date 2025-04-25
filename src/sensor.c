@@ -57,11 +57,13 @@ int get_measurement(int addr, float* temp, float* humidity){
 }
 
 int print_measurements(int addr, size_t measurements, size_t delay){
-    float temp;
+    float tempc;
+    float tempf;
     float humidity;
     for(size_t i = 0; i < measurements; ++i){
-        get_measurement(addr, &temp, &humidity);
-        printf("Temperature: %.2f°C\n", temp);
+        get_measurement(addr, &tempc, &humidity);
+        tempf = tempc * 9 / 5 + 32;
+        printf("Temperature: %.2f°C, %.2f°F\n", tempc, tempf);
         printf("Humidity: %.2f%%\n", humidity);
         sleep(delay);
     }
