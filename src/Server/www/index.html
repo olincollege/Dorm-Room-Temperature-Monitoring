@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Sensor Dashboard</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    .reading { margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Live Sensor Readings</h1>
+  <div class="reading">Timestamp: <span id="ts">–</span></div>
+  <div class="reading">Temperature: <span id="temp">–</span> °C</div>
+  <div class="reading">Humidity: <span id="hum">–</span> %</div>
+
+  <script>
+    async function fetchSensor() {
+      try {
+        const res = await fetch('/api/sensor');
+        const data = await res.json();
+        const d = new Date(data.timestamp * 1000);
+        document.getElementById('ts').innerText   = d.toLocaleTimeString();
+        document.getElementById('temp').innerText = data.temperature.toFixed(2);
+        document.getElementById('hum').innerText  = data.humidity.toFixed(2);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    fetchSensor();
+    setInterval(fetchSensor, 1000);
+  </script>
+</body>
+</html>
