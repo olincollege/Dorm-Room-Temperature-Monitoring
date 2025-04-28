@@ -1,19 +1,18 @@
+#include "database_create.h"
 #include <stdio.h>
 #include <sqlite3.h>
 
-#include <sqlite3.h>
-
-int main() {
+int create_database(const char *db_filename) {
     sqlite3 *db;
     char *errMsg = 0;
-
+    
     // Open (or create) the database
-    if (sqlite3_open("sensor_data.db", &db) != SQLITE_OK) {
+    if (sqlite3_open(db_filename, &db) != SQLITE_OK) {
         return 1;  // Error opening DB
     }
 
     // SQL statement to create the table
-    const char* create_table_sql =
+    const char *create_table_sql =
         "CREATE TABLE IF NOT EXISTS sensor_readings ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, "
@@ -26,7 +25,7 @@ int main() {
     if (sqlite3_exec(db, create_table_sql, 0, 0, &errMsg) != SQLITE_OK) {
         sqlite3_free(errMsg);
         sqlite3_close(db);
-        return 1;  // Error creating table
+        return 2;  // Error creating table
     }
 
     // Close the database
