@@ -36,7 +36,7 @@ int main() {
     // Mock sensor values (replace with real reads from sensor)
     float temperature = 23.4;
     float humidity = 55.2;
-    const char *sensor_id = "sensor_01";
+    const char *sensor_id = 0;
 
     insert_sensor_reading(temperature, humidity, sensor_id);
 
