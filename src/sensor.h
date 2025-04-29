@@ -19,6 +19,22 @@
 int open_and_connect(char* dev, int addr);
 
 /**
+ * Take a 6 byte sensor reading from an SHT40 sensor and return temp reading.
+ *
+ * @param bytes_read 6 byte SHT40 sensor reading.
+ * @return temperature reading in celsius from sensor.
+ */
+float convert_temp(unsigned char bytes_read[6]);
+
+/**
+ * Take a 6 byte sensor reading from an SHT40 sensor and return humid reading.
+ *
+ * @param bytes_read 6 byte SHT40 sensor reading.
+ * @return relative humidity reading from sensor.
+ */
+float convert_humidity(unsigned char bytes_read[6]);
+
+/**
  * Get a measurement from the sensor and store it in pointers passed in.
  * 
  * Send a measurement command, wait for a response to that command, and then
@@ -32,7 +48,6 @@ int open_and_connect(char* dev, int addr);
  * @return An int representing the success of gathering a measurement.
  */
 int get_measurement(int addr, float* temp, float* humidity);
-
 
 /**
  * Get a measurement from the sensor and store it in pointers passed in.
