@@ -18,7 +18,7 @@ int create_database(const char *db_filename) {
         "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, "
         "temperature REAL NOT NULL, "
         "humidity REAL NOT NULL, "
-        "sensor_id TEXT"
+        "sensor_id TINYINT"
         ");";
 
     // Execute the SQL statement
