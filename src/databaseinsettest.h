@@ -12,8 +12,8 @@
  * binds the temperature, humidity, and sensor ID values to the statement, and executes it.
  * Closes the database connection after the operation.
  *
- * @param temperature The temperature reading to insert.
- * @param humidity The humidity reading to insert.
+ * @param temperature The temperature reading to insert into db.
+ * @param humidity The humidity reading to insert into db.
  * @param sensor_id A string identifying the sensor that generated the reading.
  * @return 0 on success, 1 on failure.
  */
