@@ -33,14 +33,12 @@ int insert_sensor_reading(float temperature, float humidity, const char* sensor_
 }
 
 int main() {
-    srand(time(NULL));  // Seed the random number generator
+    srand(time(NULL));  // Seed RNG
 
     for (int i = 0; i < 10; ++i) {
         float temperature = 15.0 + (rand() % 1500) / 100.0f;  // 15.0 to 30.0
         float humidity = 30.0 + (rand() % 7000) / 100.0f;     // 30.0 to 100.0
-
-        char sensor_id[16];
-        snprintf(sensor_id, sizeof(sensor_id), "sensor_%d", i + 1);
+        unsigned char sensor_id = (unsigned char)(rand() % 256);  // 0 to 255
 
         insert_sensor_reading(temperature, humidity, sensor_id);
     }
