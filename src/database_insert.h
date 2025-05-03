@@ -41,3 +41,17 @@ int bind_insert_values(sqlite3_stmt *stmt, float temperature, float humidity, co
  * @return 0 on success, 4 if executing the statement failed.
  */
 int execute_insert(sqlite3_stmt *stmt);
+
+/**
+ * Insert a complete sensor reading into the database.
+ *
+ * This function calls the other helper functions in sequence to open the database,
+ * prepare and bind an insert statement, and execute it.
+ *
+ * @param db_filename The path to the database file.
+ * @param temperature Temperature reading to insert.
+ * @param humidity Humidity reading to insert.
+ * @param sensor_id Sensor identifier string.
+ * @return 0 on success, or the error code from the failing step.
+ */
+int insert_sensor_reading(const char *db_filename, float temperature, float humidity, const char *sensor_id);
