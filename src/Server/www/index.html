@@ -1,34 +1,27 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8"/>
-  <title>Sensor Dashboard</title>
-  <style>
-    body { font-family: sans-serif; margin: 2rem; }
-    .reading { margin-bottom: 1rem; }
-  </style>
-</head>
-<body>
-  <h1>Live Sensor Readings</h1>
-  <div class="reading">Timestamp: <span id="ts">–</span></div>
-  <div class="reading">Temperature: <span id="temp">–</span> °C</div>
-  <div class="reading">Humidity: <span id="hum">–</span> %</div>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cozy-door-weather-watch</title>
+    <meta name="description" content="Lovable Generated Project" />
+    <meta name="author" content="Lovable" />
 
-  <script>
-    async function fetchSensor() {
-      try {
-        const res = await fetch('/api/sensor');
-        const data = await res.json();
-        const d = new Date(data.timestamp * 1000);
-        document.getElementById('ts').innerText   = d.toLocaleTimeString();
-        document.getElementById('temp').innerText = data.temperature.toFixed(2);
-        document.getElementById('hum').innerText  = data.humidity.toFixed(2);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    fetchSensor();
-    setInterval(fetchSensor, 1000);
-  </script>
-</body>
+    <meta property="og:title" content="cozy-door-weather-watch" />
+    <meta property="og:description" content="Lovable Generated Project" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <script type="module" crossorigin src="/assets/index-BWGOX0Fv.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-LCPy1XXv.css">
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+  </body>
 </html>

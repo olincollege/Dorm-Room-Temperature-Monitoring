@@ -1,11 +1,22 @@
+# Makefile for multi-file C web server
+
 CC = gcc
-CFLAGS = -Wall -O2
+CFLAGS = -Wall -Wextra -O2
 LIBS = -lmicrohttpd -lsqlite3
 
-all: server
+SRC = main.c http_server.c db_handle.c
+OBJ = $(SRC:.c=.o)
+OUT = server
 
-server: server.c
-	$(CC) $(CFLAGS) server.c -o server $(LIBS)
+.PHONY: all clean
+
+all: $(OUT)
+
+$(OUT): $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f server
+	rm -f $(OBJ) $(OUT)
