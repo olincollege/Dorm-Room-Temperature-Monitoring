@@ -33,12 +33,17 @@ int insert_sensor_reading(float temperature, float humidity, const char* sensor_
 }
 
 int main() {
-    // Mock sensor values (replace with real reads from sensor)
-    float temperature = 23.4;
-    float humidity = 55.2;
-    const char *sensor_id = 0;
+    srand(time(NULL));  // Seed the random number generator
 
-    insert_sensor_reading(temperature, humidity, sensor_id);
+    for (int i = 0; i < 10; ++i) {
+        float temperature = 15.0 + (rand() % 1500) / 100.0f;  // 15.0 to 30.0
+        float humidity = 30.0 + (rand() % 7000) / 100.0f;     // 30.0 to 100.0
+
+        char sensor_id[16];
+        snprintf(sensor_id, sizeof(sensor_id), "sensor_%d", i + 1);
+
+        insert_sensor_reading(temperature, humidity, sensor_id);
+    }
 
     return 0;
 }
