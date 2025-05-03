@@ -23,6 +23,16 @@ int open_and_connect(char* dev, int addr){
     return fd;
 }
 
+float convert_temp(unsigned char bytes_read[6]){
+    uint16_t temp_raw = (bytes_read[0] << 8) | bytes_read[1];
+    return -45 + 175 * ((float)temp_raw / 65535.0);
+}
+
+float convert_humidity(unsigned char bytes_read[6]){
+    uint16_t hum_raw = (bytes_read[3] << 8) | bytes_read[4];
+    return 100 * ((float)hum_raw / 65535.0);
+}
+
 int get_measurement(int addr, float* temp, float* humidity){
     int fd = open_and_connect(I2C_DEV, addr);
     
@@ -44,13 +54,8 @@ int get_measurement(int addr, float* temp, float* humidity){
         return 1;
     }
 
-    // Convert temperature
-    uint16_t temp_raw = (buf[0] << 8) | buf[1];
-    *temp = -45 + 175 * ((float)temp_raw / 65535.0);
-
-    // Convert humidity
-    uint16_t hum_raw = (buf[3] << 8) | buf[4];
-    *humidity = 100 * ((float)hum_raw / 65535.0);
+    *temp = convert_temp(buf);
+    *humidity = convert_humidity(buf);
 
     close(fd);
     return 0;
