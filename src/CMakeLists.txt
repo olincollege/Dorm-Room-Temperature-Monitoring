@@ -8,6 +8,19 @@
 # or similar. The PRIVATE/INTERFACE/PUBLIC keyword will depend on whether the
 # library is used only in function bodies (PRIVATE), only in function
 # signatures/types (INTERFACE), or both (PUBLIC).
+find_package(SQLite3 REQUIRED)
 add_library(sensor sensor.c sensor.h)
+add_library(database_create database_create.c database_create.h)
+add_library(database_insert database_insert.c database_insert.h)
+
+target_link_libraries(database_create PRIVATE SQLite::SQLite3)
+target_link_libraries(database_insert PRIVATE SQLite::SQLite3)
+
 add_executable(main main.c)
-target_link_libraries(main PRIVATE sensor)
+
+target_link_libraries(main
+    PRIVATE
+      sensor
+      database_create
+      database_insert
+)
