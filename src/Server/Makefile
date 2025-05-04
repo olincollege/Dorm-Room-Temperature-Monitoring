@@ -1,7 +1,7 @@
 # Makefile for C web server
 
 CC = gcc
-CFLAGS = -Wall -Wextra -O2
+CFLAGS = -Wall -Wextra -pedantic -Werror -O2
 LIBS = -lmicrohttpd -lsqlite3
 
 SRC = main.c http_server.c api_handler.c static_handler.c utils.c db_handle.c
