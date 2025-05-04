@@ -1,5 +1,5 @@
-#ifndef HTTP_SERVER_H
-#define HTTP_SERVER_H
+// http_server.h
+#pragma once
 
 #include <microhttpd.h>
 
@@ -8,4 +8,4 @@ enum MHD_Result answer(void* cls, struct MHD_Connection* connection,
                        const char* upload_data, size_t* upload_data_size,
                        void** con_cls);
 
-#endif
+void add_cors_headers(struct MHD_Response* resp);
