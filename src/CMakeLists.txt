@@ -8,6 +8,9 @@
 # or similar. The PRIVATE/INTERFACE/PUBLIC keyword will depend on whether the
 # library is used only in function bodies (PRIVATE), only in function
 # signatures/types (INTERFACE), or both (PUBLIC).
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+
 find_package(SQLite3 REQUIRED)
 add_library(sensor Sensor/sensor.c Sensor/sensor.h)
 add_library(database_create database_create.c database_create.h)
