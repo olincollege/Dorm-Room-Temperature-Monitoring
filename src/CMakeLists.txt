@@ -15,6 +15,16 @@ find_package(SQLite3 REQUIRED)
 add_library(sensor Sensor/sensor.c Sensor/sensor.h)
 add_library(database_create database_create.c database_create.h)
 add_library(database_insert database_insert.c database_insert.h)
+add_library(server
+    Server/api_handler.c
+    Server/db_handle.c
+    Server/http_server.c
+    Server/sensor_feeder.c
+    Server/static_handler.c
+    Server/utils.c
+)
+target_include_directories(server PRIVATE Server)
+target_link_libraries(server PRIVATE SQLite::SQLite3 microhttpd)
 
 target_link_libraries(database_create PRIVATE SQLite::SQLite3)
 target_link_libraries(database_insert PRIVATE SQLite::SQLite3)
@@ -26,4 +36,5 @@ target_link_libraries(main
       sensor
       database_create
       database_insert
+      server
 )

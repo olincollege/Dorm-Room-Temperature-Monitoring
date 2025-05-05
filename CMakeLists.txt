@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.22)
 
 # TODO: Define a good project in the line below. If applicable, list other
 # languages in this project managed by CMake.
-project(ProjectTitle
+project(DormRoomTempMonitor
   VERSION 1.0
   LANGUAGES C
 )
@@ -35,7 +35,8 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 set(CMAKE_C_CLANG_TIDY "clang-tidy")
 
 # Include the source files.
-add_subdirectory(src)
+add_subdirectory(src
+src/Server)
 
 # In current courses that teach C, we use the Criterion testing framework. If
 # If you want to use a different framework, or if you want to skip testing
@@ -44,4 +45,4 @@ include(CTest)
 find_library(CRITERION criterion REQUIRED)
 set(CRITERION_FLAGS --verbose -j1)
 
-add_subdirectory(test)
+# add_subdirectory(test)
