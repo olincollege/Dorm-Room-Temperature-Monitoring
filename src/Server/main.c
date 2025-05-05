@@ -4,7 +4,7 @@
 #include "db_handle.h"
 #include "http_server.h"
 
-#define PORT 8080
+enum { PORT = 8080 };
 
 int main(void) {
   init_database("sensor_data.db");
@@ -13,13 +13,15 @@ int main(void) {
       MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, PORT, NULL, NULL, &answer,
                        NULL, MHD_OPTION_END);
   if (!daemon) {
-    fprintf(stderr, "Failed to start HTTP server\n");
+    if (fprintf(stderr, "Failed to start HTTP server\n") < 0) {
+      perror("Error writing to stderr");
+    }
     return 1;
   }
 
   printf("Server listening on port %d\n", PORT);
   printf("Press Enter to quit.\n");
-  getchar();
+  (void)getchar();
 
   MHD_stop_daemon(daemon);
   close_database();

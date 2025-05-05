@@ -1,6 +1,7 @@
 // api_handler.c
 #include "api_handler.h"
 
+#include <microhttpd.h>
 #include <sqlite3.h>
 #include <stdio.h>
 #include <string.h>
@@ -8,7 +9,7 @@
 #include "db_handle.h"
 #include "utils.h"
 
-#define JSON_BUF_SIZE 128
+enum { JSON_BUF_SIZE = 128 };
 
 // Handles the GET /api/sensor endpoint
 enum MHD_Result handle_api_sensor(struct MHD_Connection* connection) {
@@ -17,7 +18,7 @@ enum MHD_Result handle_api_sensor(struct MHD_Connection* connection) {
       "SELECT timestamp, temperature, humidity "
       "FROM sensor_readings ORDER BY timestamp DESC LIMIT 1;";
 
-  if (sqlite3_prepare_v2(global_database_handle, sql, -1, &stmt, NULL) !=
+  if (sqlite3_prepare_v2(get_database_handle(), sql, -1, &stmt, NULL) !=
       SQLITE_OK) {
     const char* err = "Internal Server Error";
     struct MHD_Response* resp = MHD_create_response_from_buffer(
