@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "sensor.h"
+#include "./Sensor/sensor.h"
 #include "database_insert.h"
 #include "database_create.h"
 

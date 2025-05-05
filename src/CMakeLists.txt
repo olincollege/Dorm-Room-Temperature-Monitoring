@@ -9,7 +9,7 @@
 # library is used only in function bodies (PRIVATE), only in function
 # signatures/types (INTERFACE), or both (PUBLIC).
 find_package(SQLite3 REQUIRED)
-add_library(sensor sensor.c sensor.h)
+add_library(sensor Sensor/sensor.c Sensor/sensor.h)
 add_library(database_create database_create.c database_create.h)
 add_library(database_insert database_insert.c database_insert.h)
 
