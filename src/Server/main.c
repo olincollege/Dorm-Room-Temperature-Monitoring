@@ -10,8 +10,8 @@ int main(void) {
   init_database("sensor_data.db");
 
   struct MHD_Daemon* daemon =
-      MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, PORT, NULL, NULL, &answer,
-                       NULL, MHD_OPTION_END);
+      MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, PORT, NULL, NULL,
+                       &http_server_answer, NULL, MHD_OPTION_END);
   if (!daemon) {
     if (fprintf(stderr, "Failed to start HTTP server\n") < 0) {
       perror("Error writing to stderr");
