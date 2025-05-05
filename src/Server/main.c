@@ -7,7 +7,7 @@
 enum { PORT = 8080 };
 
 int main(void) {
-  init_database("sensor_data.db");
+  init_database("../sensor.db");
 
   struct MHD_Daemon* daemon =
       MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, PORT, NULL, NULL,

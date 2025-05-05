@@ -16,7 +16,7 @@ enum MHD_Result handle_static_file(const char* url,
                                    struct MHD_Connection* connection) {
   char filepath[FILEPATH_BUFFER_SIZE];
   if (strcmp(url, "/") == 0) {
-    if (snprintf(filepath, sizeof(filepath), "www/base_index.html") >=
+    if (snprintf(filepath, sizeof(filepath), "www/index.html") >=
         (int)sizeof(filepath)) {
       if (fprintf(stderr, "Error: Filepath buffer size exceeded\n") < 0) {
         perror("fprintf failed");
