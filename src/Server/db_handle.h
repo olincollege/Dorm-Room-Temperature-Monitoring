@@ -11,7 +11,8 @@
  * calling `init_database()` before use and closed with `close_database()`
  * when no longer needed.
  */
-extern sqlite3* global_database_handle;
+// db_handle.h
+sqlite3* get_database_handle(void);
 
 /**
  * Initializes the SQLite database connection.

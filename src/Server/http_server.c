@@ -1,6 +1,7 @@
 // http_server.c
-#include "http_server.h"
+#include "http_server.h" // Intentional: ensure header matches implementation
 
+#include <microhttpd.h>
 #include <string.h>
 
 #include "api_handler.h"
@@ -8,14 +9,14 @@
 #include "utils.h"
 
 // Main request dispatcher for the HTTP server
-enum MHD_Result answer(void* cls, struct MHD_Connection* connection,
-                       const char* url, const char* method, const char* version,
-                       const char* upload_data, size_t* upload_data_size,
-                       void** con_cls) {
+enum MHD_Result http_server_answer(void* cls, struct MHD_Connection* connection,
+                                   const char* url, const char* method,
+                                   const size_t* upload_data_size,
+                                   void** con_cls) {
+  // Mark unused parameters
   (void)cls;
-  (void)version;
-  (void)upload_data;
   (void)upload_data_size;
+  (void)method;
   (void)con_cls;
 
   // Handle CORS preflight
