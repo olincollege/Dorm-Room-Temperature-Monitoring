@@ -1,5 +1,6 @@
 #include <math.h>
 #include <microhttpd.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -13,6 +14,34 @@
 
 enum { PORT = 8080 };
 
+// Background thread to read sensor data and insert into database
+void* sensor_logger_thread(void* arg) {
+  float temp = NAN;
+  float humidity = NAN;
+
+  while (1) {
+    if (get_measurement(SHT40_ADDR, &temp, &humidity) != 0) {
+      if (fprintf(stderr, "Sensor read failed\n") < 0) {
+        perror("Error writing to stderr");
+      }
+      continue;
+    }
+
+    if (insert_sensor_reading("sensor.db", temp, humidity, "Sensor01") != 0) {
+      if (fprintf(stderr, "DB insert failed\n") < 0) {
+        perror("Error writing to stderr");
+      }
+      continue;
+    }
+
+    printf("Recorded: %.2f°C, %.2f%%\n", temp, humidity);
+    struct timespec delay = {1, 0};  // 1 second
+    nanosleep(&delay, NULL);
+  }
+
+  return NULL;
+}
+
 int main(void) {
   if (create_database("sensor.db") != 0) {
     if (fprintf(stderr, "Failed to create database\n") < 0) {
@@ -21,28 +50,15 @@ int main(void) {
     return 1;
   }
 
-  float temp = NAN;
-  float humidity = NAN;
-  while (1) {
-    if (get_measurement(SHT40_ADDR, &temp, &humidity) != 0) {
-      if (fprintf(stderr, "Sensor read failed\n") < 0) {
-        perror("Error writing to stderr");
-      }
-      break;
-    }
-    if (insert_sensor_reading("sensor.db", temp, humidity, "Sensor01") != 0) {
-      if (fprintf(stderr, "DB insert failed\n") < 0) {
-        perror("Error writing to stderr");
-      }
-      break;
-    }
-    printf("Recorded: %.2f°C, %.2f%%\n", temp, humidity);
-    struct timespec timeSpec = {1, 0};  // 1 second, 0 nanoseconds
-    nanosleep(&timeSpec, NULL);
+  // Start background thread for logging
+  pthread_t sensor_thread = 0;
+  if (pthread_create(&sensor_thread, NULL, sensor_logger_thread, NULL) != 0) {
+    perror("Failed to start sensor thread");
+    return 1;
   }
 
   // Initialize the database connection
-  init_database("sensor_data.db");
+  init_database("sensor.db");
 
   // Start the HTTP server
   struct MHD_Daemon* daemon =
@@ -62,5 +78,7 @@ int main(void) {
   // Stop the HTTP server
   MHD_stop_daemon(daemon);
   close_database();
+  pthread_cancel(sensor_thread);
+  pthread_join(sensor_thread, NULL);
   return 0;
 }

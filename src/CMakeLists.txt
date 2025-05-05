@@ -37,4 +37,5 @@ target_link_libraries(main
       database_create
       database_insert
       server
+      pthread
 )
