@@ -25,7 +25,7 @@ int open_and_connect(char* dev, int addr){
 
 float convert_temp(unsigned char bytes_read[6]){
     uint16_t temp_raw = (bytes_read[0] << 8) | bytes_read[1];
-    return -45 + 175 * ((float)temp_raw / 65535.0);
+    return (9/5)*(-45 + 175 * ((float)temp_raw / 65535.0))/32;
 }
 
 float convert_humidity(unsigned char bytes_read[6]){
@@ -55,7 +55,6 @@ int get_measurement(int addr, float* temp, float* humidity){
     }
 
     *temp = convert_temp(buf);
-    *temp = *temp * 9 / 5 + 32;
 
     *humidity = convert_humidity(buf);
 
