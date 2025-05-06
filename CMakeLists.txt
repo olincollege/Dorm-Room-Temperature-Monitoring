@@ -13,6 +13,8 @@ project(DormRoomTempMonitor
 # version of Ubuntu.
 set(CMAKE_C_STANDARD 17)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
 set(CMAKE_C_FLAGS "-Wall -Wextra")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pedantic")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wconversion")
@@ -34,9 +36,11 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 # instead. If that file is not present, clang-tidy will be of limited help.
 set(CMAKE_C_CLANG_TIDY "clang-tidy")
 
+find_package(SQLite3 REQUIRED)
+find_library(MICROHTTPD_LIB microhttpd REQUIRED)
+
 # Include the source files.
-add_subdirectory(src
-src/Server)
+add_subdirectory(src)
 
 # In current courses that teach C, we use the Criterion testing framework. If
 # If you want to use a different framework, or if you want to skip testing
