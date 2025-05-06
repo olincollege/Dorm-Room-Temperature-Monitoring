@@ -22,7 +22,9 @@ int main(void) {
             fprintf(stderr, "DB insert failed\n");
             break;
         }
-        printf("Recorded: %.2f°C, %.2f%%\n", temp, humidity);
+        float tempf = temp * 9 / 5 + 32;
+
+        printf("Recorded: %.2f°C, %.2f%%\n", tempf, humidity);
         sleep(1);
     }
     return 0;

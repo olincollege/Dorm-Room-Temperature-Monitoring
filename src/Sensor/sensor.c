@@ -55,6 +55,7 @@ int get_measurement(int addr, float* temp, float* humidity){
     }
 
     *temp = convert_temp(buf);
+
     *humidity = convert_humidity(buf);
 
     close(fd);
