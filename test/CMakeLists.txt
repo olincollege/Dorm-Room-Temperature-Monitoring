@@ -28,8 +28,6 @@ set(DB_SOURCES
 add_executable(unit_tests
   ${TEST_SOURCES}
   ${SENSOR_SOURCE}
-  ${TEST_SOURCES}
-  ${SENSOR_SOURCE}
   ${DB_SOURCES}
 )
 
@@ -54,5 +52,5 @@ target_link_directories(unit_tests PRIVATE
 # 10) Register with CTest
 add_test(
   NAME sensor_unit_tests
-  COMMAND unit_tests --no-fork
+  COMMAND unit_tests
 )
