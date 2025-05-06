@@ -15,8 +15,8 @@ find_package(SQLite3 REQUIRED)
 
 # Add Libraries
 add_library(sensor Sensor/sensor.c Sensor/sensor.h)
-add_library(database_create database_create.c database_create.h)
-add_library(database_insert database_insert.c database_insert.h)
+add_library(database_create Database/database_create.c Database/database_create.h)
+add_library(database_insert Database/database_insert.c Database/database_insert.h)
 add_library(server
     Server/api_handler.c
     Server/db_handle.c
