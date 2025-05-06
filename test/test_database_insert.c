@@ -1,7 +1,7 @@
 #include <criterion/criterion.h>
 #include <criterion/new/assert.h>
 #include <sqlite3.h>
-#include "./Database/database_insert.h"
+#include "../src/Database/database_insert.h"
 
 #define TEST_DB "test_sensor.db"
 

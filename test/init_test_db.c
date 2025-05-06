@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "./Database/database_create.h"
+#include "../src/Database/database_create.h"
 
 int main() {
     const char *filename = "test_sensor.db";
