@@ -14,7 +14,7 @@ This project is a local and remotely-accessible temperature and humidity monitor
 
 - SHT40 wired to GPIO pins of raspi
 - Sensor values grabbed using I2C protocol
-- TODO explain DB stuff
+- Initiliaze database using sqlite3 → database schema includes id, timestamp, temperature, humidity, sensor_id parameters
 - `server` (C, libmicrohttpd) → serves `/api/sensor`
 - Frontend (React, Vite) → fetches and displays live readings
 - Ngrok → exposes local server to the internet
