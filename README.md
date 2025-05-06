@@ -85,13 +85,23 @@ You will have to run main in /src and also server in src/Server.
 
 ### CMake
 
+Note: CMake is temperamental with this project.
+
 If using CMake:
 
 ```bash
 cmake -S . -B build && cmake --build build
 ```
 
-#### Run
+It is recommended you clean the build before rebuilding:
+
+```bash
+cmake --fresh -B build
+```
+
+Doing both in project root.
+
+#### Run CMake
 
 For the front end server:
 
@@ -110,6 +120,33 @@ For the real time data collection:
 
 ```bash
 ./src/sensor_logger
+```
+
+You should see sensor outputs in the form:
+
+```
+Recorded: 24.48°C, 42.76%
+```
+
+#### Run
+
+For the front end server:
+
+```bash
+./src/Server/server
+```
+
+You should see:
+
+```
+Server listening on port 8080
+Press Enter to stop.
+```
+
+For the real time data collection:
+
+```bash
+./src/main
 ```
 
 You should see sensor outputs in the form:
