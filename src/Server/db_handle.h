@@ -34,4 +34,21 @@ void init_database(const char* path);
  */
 void close_database(void);
 
+/**
+ * Represents a single sensor reading from the database.
+ */
+typedef struct {
+  long timestamp;
+  double temperature;
+  double humidity;
+} SensorReading;
+
+/**
+ * Fetches the most recent sensor reading from the database.
+ *
+ * @param out A pointer to a SensorReading struct to populate.
+ * @return 0 on success, 1 on DB error, 2 if no data found.
+ */
+int get_latest_reading(SensorReading* out);
+
 #endif  // DB_H

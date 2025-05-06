@@ -35,6 +35,7 @@ add_executable(unit_tests
 target_include_directories(unit_tests PRIVATE
   "${CMAKE_SOURCE_DIR}/src/Sensor"
   "${CMAKE_SOURCE_DIR}/src/Database"
+  "${CMAKE_SOURCE_DIR}/src/Server" 
   ${CRITERION_INCLUDE_DIRS}
 )
 
