@@ -46,7 +46,8 @@ add_subdirectory(src)
 # If you want to use a different framework, or if you want to skip testing
 # entirely (not recommended), change the lines below.
 include(CTest)
+enable_testing()
 find_library(CRITERION criterion REQUIRED)
 set(CRITERION_FLAGS --verbose -j1)
 
-# add_subdirectory(test)
+add_subdirectory(test)
