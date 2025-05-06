@@ -25,7 +25,7 @@ enum MHD_Result http_server_answer(void* cls, struct MHD_Connection* connection,
     struct MHD_Response* resp =
         MHD_create_response_from_buffer(0, NULL, MHD_RESPMEM_PERSISTENT);
     add_cors_headers(resp);
-    int ret = MHD_queue_response(connection, MHD_HTTP_OK, resp);
+    enum MHD_Result ret = MHD_queue_response(connection, MHD_HTTP_OK, resp);
     MHD_destroy_response(resp);
     return ret;
   }
@@ -45,7 +45,8 @@ enum MHD_Result http_server_answer(void* cls, struct MHD_Connection* connection,
   struct MHD_Response* resp = MHD_create_response_from_buffer(
       strlen(msg), (void*)msg, MHD_RESPMEM_PERSISTENT);
   add_cors_headers(resp);
-  int ret = MHD_queue_response(connection, MHD_HTTP_NOT_FOUND, resp);
+  enum MHD_Result ret =
+      MHD_queue_response(connection, MHD_HTTP_NOT_FOUND, resp);
   MHD_destroy_response(resp);
   return ret;
 }
