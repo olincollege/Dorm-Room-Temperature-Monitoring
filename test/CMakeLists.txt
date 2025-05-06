@@ -20,22 +20,28 @@ file(GLOB TEST_SOURCES "*.c")
 set(SENSOR_SOURCE
   "${CMAKE_SOURCE_DIR}/src/Sensor/sensor.c"
 )
-
+set(DB_SOURCES
+  "${CMAKE_SOURCE_DIR}/src/Database/database_create.c"
+  "${CMAKE_SOURCE_DIR}/src/Database/database_insert.c"
+)
 # 6) Build the test runner, compiling both tests and sensor.c
 add_executable(unit_tests
   ${TEST_SOURCES}
   ${SENSOR_SOURCE}
+  ${DB_SOURCES}
 )
 
 # 7) Make headers visible
 target_include_directories(unit_tests PRIVATE
   "${CMAKE_SOURCE_DIR}/src/Sensor"
+  "${CMAKE_SOURCE_DIR}/src/Database"
   ${CRITERION_INCLUDE_DIRS}
 )
 
 # 8) Link in the Criterion libraries via pkg-config
 target_link_libraries(unit_tests PRIVATE
   ${CRITERION_LIBRARIES}
+  sqlite3 
 )
 
 # 9) Ensure the linker knows where to find them at runtime
@@ -46,5 +52,5 @@ target_link_directories(unit_tests PRIVATE
 # 10) Register with CTest
 add_test(
   NAME sensor_unit_tests
-  COMMAND unit_tests --no-fork
+  COMMAND unit_tests
 )
