@@ -43,12 +43,16 @@ enum MHD_Result handle_static_file(const char* url,
   fstat(file_descriptor, &file_stat);
 
   const char* content_type = infer_mime_type(filepath);
-  struct MHD_Response* resp =
-      MHD_create_response_from_fd(file_stat.st_size, file_descriptor);
+  struct MHD_Response* resp = NULL;
+  if (file_stat.st_size < 0) {
+    close(file_descriptor);
+    return MHD_NO;
+  }
+  MHD_create_response_from_fd((size_t)file_stat.st_size, file_descriptor);
   MHD_add_response_header(resp, "Content-Type", content_type);
   add_cors_headers(resp);
 
-  int ret = MHD_queue_response(connection, MHD_HTTP_OK, resp);
+  enum MHD_Result ret = MHD_queue_response(connection, MHD_HTTP_OK, resp);
   MHD_destroy_response(resp);
   return ret;
 }
