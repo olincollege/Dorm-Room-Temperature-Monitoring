@@ -3,8 +3,8 @@
 #include <unistd.h>
 
 #include "./Sensor/sensor.h"
-#include "database_insert.h"
-#include "database_create.h"
+#include "./Database/database_create.h"
+#include "./Database/database_insert.h"
 
 int main(void) {
     if (create_database("sensor.db") != 0) {
@@ -22,7 +22,6 @@ int main(void) {
             fprintf(stderr, "DB insert failed\n");
             break;
         }
-        float tempf = temp * 9 / 5 + 32;
 
         printf("Recorded: %.2f°C, %.2f%%\n", tempf, humidity);
         sleep(1);
