@@ -99,9 +99,9 @@ It is recommended you clean the build before rebuilding:
 cmake --fresh -B build
 ```
 
-Doing both in project root.
+Do both of the above commands in project root.
 
-#### Run CMake
+#### Run with CMake
 
 For the front end server:
 
@@ -161,6 +161,10 @@ Recorded: 24.48°C, 42.76%
 ngrok http 8080
 ```
 
+##### Note
+
+Each one of these executables will have to be run in their own terminal.
+
 #### View the dashboard
 
 Open a browser to:
@@ -186,3 +190,24 @@ Or, to view on terminal:
 ```bash
 curl http://localhost:8080/api/sensor
 ```
+
+#### Simulation without real sensor input
+
+A sample database has been supplied in the repo located in /src. Note: The next two steps will be run in their own terminals.
+
+1. You can simulate a live feed by running the below:
+
+```bash
+gcc src/Server/sensor_feeder.c -lsqlite3 -o src/feeder
+./src/Server/feeder
+```
+
+2. Run the server:
+
+```bash
+cd src/Server
+make
+./server
+```
+
+If ngrok is desired use the same steps as above.

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define DB_PATH "sensor_data.db"
+#define DB_PATH "sensor.db"
 #define SENSOR_ID "sensor1"
 // Integer constants as scoped, typed values
 enum {
