@@ -2,6 +2,7 @@
 #include "http_server.h"
 
 #include <microhttpd.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "api_handler.h"
@@ -19,6 +20,14 @@ enum MHD_Result http_server_answer(void* cls, struct MHD_Connection* connection,
   (void)upload_data;
   (void)upload_data_size;
   (void)con_cls;
+  // if (fprintf(stderr, "[DEBUG] Received %s request for %s\n", method, url) <
+  //     0) {
+  //   perror("Error writing to stderr");
+  // }
+
+  // if (fprintf(stderr, "[DEBUG] Method: %s | URL: %s\n", method, url) < 0) {
+  //   perror("Error writing to stderr");
+  // }
 
   // Handle CORS preflight
   if (strcmp(method, "OPTIONS") == 0) {
@@ -31,7 +40,8 @@ enum MHD_Result http_server_answer(void* cls, struct MHD_Connection* connection,
   }
 
   // Route to /api/sensor
-  if (strcmp(method, "GET") == 0 && strcmp(url, "/api/sensor") == 0) {
+  if (strcmp(method, "GET") == 0 &&
+      (strcmp(url, "/api/sensor") == 0 || strcmp(url, "/api/sensor/") == 0)) {
     return handle_api_sensor(connection);
   }
 

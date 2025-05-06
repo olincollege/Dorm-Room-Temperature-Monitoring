@@ -21,21 +21,12 @@ This project is a local and remotely-accessible temperature and humidity monitor
 
 ### How to Run
 
-#### Server
-
-```bash
-make
-./server
-```
-
-Using curl in terminal or a webrowser enter http://localhost:8080
-
 #### Sensor Wiring
 
 Use the Raspberry Pi’s 40-pin header in **BCM** numbering mode:
 
 | Sensor pin | Meaning       | Raspberry Pi pin | BCM number |
-|------------|---------------|------------------|------------|
+| ---------- | ------------- | ---------------- | ---------- |
 | VCC        | Power (3.3 V) | Pin 1            | –          |
 | GND        | Ground        | Pin 9            | –          |
 | SDA        | I²C Data      | Pin 3            | GPIO2      |
@@ -57,12 +48,6 @@ Reboot Pi:
 
 ```bash
 sudo reboot
-```
-
-#### Tunneling (Optional if you only want to run locally)
-
-```bash
-ngrok http 8080
 ```
 
 Copy forwarding address and use or share.
@@ -90,17 +75,28 @@ cd Dorm-Room-Temperature-Monitoring
 
 #### Compile
 
+If using make you will have to do it once inside /src and again in /src/Server.
+
 ```bash
 make
 ```
 
-#### Run
+You will have to run main in /src and also server in src/Server.
 
+### CMake
+
+If using CMake:
+
+```bash
+cmake -S . -B build && cmake --build build
+```
+
+#### Run
 
 For the front end server:
 
 ```bash
-./http_server
+./src/http_server
 ```
 
 You should see:
@@ -113,13 +109,19 @@ Press Enter to stop.
 For the real time data collection:
 
 ```bash
-./sensor_logger
+./src/sensor_logger
 ```
 
 You should see sensor outputs in the form:
 
 ```
 Recorded: 24.48°C, 42.76%
+```
+
+#### Tunneling (Optional if you only want to run locally)
+
+```bash
+ngrok http 8080
 ```
 
 #### View the dashboard
@@ -130,8 +132,20 @@ Open a browser to:
 http://localhost:8080
 ```
 
+For a light version:
+
+```
+http://localhost:8080/api/sensor
+```
+
 Or, if sharing through ngrok:
 
 ```
-https://your-ngrok-url.ngrok-free.app
+https://your-ngrok-url.ngrok-free.app //This will be given by ngrok when you initialize it. Note: Its different every time.
+```
+
+Or, to view on terminal:
+
+```bash
+curl http://localhost:8080/api/sensor
 ```
