@@ -23,7 +23,7 @@ int main(void) {
             break;
         }
 
-        printf("Recorded: %.2f°C, %.2f%%\n", tempf, humidity);
+        printf("Recorded: %.2f°C, %.2f%%\n", temp, humidity);
         sleep(1);
     }
     return 0;
