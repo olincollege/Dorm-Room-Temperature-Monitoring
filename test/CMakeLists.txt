@@ -46,5 +46,5 @@ target_link_directories(unit_tests PRIVATE
 # 10) Register with CTest
 add_test(
   NAME sensor_unit_tests
-  COMMAND unit_tests
+  COMMAND unit_tests --no-fork
 )
