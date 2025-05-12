@@ -211,3 +211,9 @@ make
 ```
 
 If ngrok is desired use the same steps as above.
+
+#### Interesting challenges we encountered
+
+1. We got our code for each section of this project done in one function. Refactoring that code became a challenge down the line.
+2. Trying to optimize the Database schema to use up as little memory as possible was challenging.
+3. Version control got confusing when multiple of us sshed into the Raspberry Pi at the same time.
